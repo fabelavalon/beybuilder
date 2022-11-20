@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html style="background-color:#20083a">
+<head>
+    <title>BeyBuilder v0.9</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="./bootstrap.css" rel="stylesheet"  />
+    <link href="./beybuilder.css" rel="stylesheet"  />
+    <script src="./bootstrap.bundle.js"></script>
+</head>
+<body>
+
+    <div class="container-fluid border" style="background-color:#20083a">
+        <h1 style="color:white">BeyBuilder v0.9</h1>
+        <h3 style="color:white">for Dynamite Battle and Burst Ultimate</h3>
+      </div>
+      
+      <div class="container-fluid border" style="background-color:#20083a">
+        <div class="row">
+          <div class="col-md-8 border">
+              <!--BeyBlade 1 dropdowns and name space-->
+              <button onclick="generateBey1()" class="btn btn-basic">Choose Beyblade 1</button>
+              <select id="bey1Blade" class="select-basic"><option value="random">Random Blade</option></select>
+              <select id="bey1Core" class="select-basic"><option value="random">Random Core</option></select>
+              <select id="bey1Disc" class="select-basic"><option value="random">Random Forge Disc</option></select>
+              <select id="bey1Driver" class="select-basic"><option value="random">Random Driver</option></select>
+              <select id="bey1Armor" class="select-basic"><option value="random">Random Armor</option></select>
+              <br>
+              <br>
+              <!--BeyBlade 2 dropdowns and name space-->
+              <button onclick="generateBey2()" class="btn btn-basic">Choose Beyblade 2</button>
+              <select id="bey2Blade" class="select-basic"><option value="random">Random Blade</option></select>
+              <select id="bey2Core" class="select-basic"><option value="random">Random Core</option></select>
+              <select id="bey2Disc" class="select-basic"><option value="random">Random Forge Disc</option></select>
+              <select id="bey2Driver" class="select-basic"><option value="random">Random Driver</option></select>
+              <select id="bey2Armor" class="select-basic"><option value="random">Random Armor</option></select>
+              <br>
+              <br>
+              <p style="color:white"id="buttonContainer"></p>
+              <p style="color:white" id="winnerLog"></p>
+              <p style="color:white" id="error"></p>
+          </div>
+          <div class="col-sm-12 col-md-4 border">
+              <div class="row">
+                  <div class="col-sm-6 col-md-12 border" style="background-color:#20083a">
+                      <!--BeyBlade 1 stat space-->
+                      <span style="color:white" id="bey1Is">Beyblade 1 has not been selected.</span>
+                      <br>
+                      <span style="color:white" id="bey1Stats"></span>
+                      <br>
+                      <span style="color:white" id="bey1KO"></span>
+                      <br>
+                      <span style="color:white" id="bey1SO"></span>
+                      <br>
+                      <span style="color:white" id="bey1Bst"></span>
+                      <br>
+                      <span style="color:white" id="bey1Draw"></span>
+                  </div>
+                  <div class="col-sm-6 col-md-12 border" style="background-color:#20083a">
+                    <!--BeyBlade 2 stat space-->
+                    <span style="color:white" id="bey2Is">Beyblade 2 has not been selected.</span>
+                    <br>
+                    <span style="color:white" id="bey2Stats"></span>
+                    <br>
+                    <span style="color:white" id="bey2KO"></span>
+                    <br>
+                    <span style="color:white" id="bey2SO"></span>
+                    <br>
+                    <span style="color:white" id="bey2Bst"></span>
+                    <br>
+                    <span style="color:white" id="bey2Draw"></span>
+                  </div>
+              </div>
+          </div>
+        </div>
+        
+        <div class="row" style="background-color:#20083a">
+          <div class="col" style="background-color:#20083a">
+              <h5 style="color:white">All Beyblades in the system:</h5>
+          </div>
+      </div>
+      <div class="row" style="background-color:#20083a">
+          <div class="col-sm-4 col-xl-3" style="background-color:#20083a">
+              <!--beyblade selector from database of beys-->
+              <select id="dbSelectList" class="select-list" size="10" onchange="setDbBey()" multiple></select>
+          </div>
+          <div class="col-sm-4 col-xl-3" id="dbBeySpace" style="background-color:#20083a">
+              <br>
+              <span style="color:white" id="dbBeyIs"></span>
+              <br>
+              <span style="color:white" id="dbBeyStats"></span>
+              <br>
+              <span style="color:white" id="dbBeyKO"></span>
+              <br>
+              <span style="color:white" id="dbBeySO"></span>
+              <br>
+              <span style="color:white" id="dbBeyBst"></span>
+              <br>
+              <span style="color:white" id="dbBeyDraw"></span>
+              <br>
+          </div>
+      </div>
+      </div>
+      
+      <!-- delete beyblade popup -->
+      <div class="modal fade" id="areYouSure" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content" style="background-color:#20083a">
+            <div class="modal-body">
+                <h5 class="modal-title" id="exampleModalLabel" style="text-align: center; color:white">Are You Sure?</h5>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-basic" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="deleteBey()">Yes, Delete this BeyBlade</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- edit beyblade popup -->
+      <div class="modal fade" id="editBeyPopup" tabindex="-1" aria-labelledby="beyPopupLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content" style="background-color:#20083a; color:#fff">
+            <div class="modal-header">
+              <h5 class="modal-title" id="beyPopupLabel">Edit Bey Stats</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="color:#fff">
+                <form id="statEditor" style="color:#fff">
+                    <label for="wko">Bey Wins by KO:</label>
+                    <input type="number" id="wko" name="wko" value=""><br><br>
+                    <label for="wlo">Bey Losses by KO:</label>
+                    <input type="number" id="lko" name="lko" value=""><br><br>
+
+                    <label for="wko">Bey Wins by SO:</label>
+                    <input type="number" id="wso" name="wso" value=""><br><br>
+                    <label for="lso">Bey Losses by SO:</label>
+                    <input type="number" id="lso" name="lso" value=""><br><br>
+
+                    <label for="wbsy">Bey Wins by Burst:</label>
+                    <input type="number" id="wbst" name="wbst" value=""><br><br>
+                    <label for="lbst">Bey Losses by Burst:</label>
+                    <input type="number" id="lbst" name="lbst" value=""><br><br>
+
+                    <label for="dr">Bey Draws:</label>
+                    <input type="number" id="dr" name="dr" value=""><br><br>
+                  </form>
+            </div>
+            <div class="modal-footer">
+                Note. You MUST reselect a beyblade from the list if you wish to change the same bey more than once.
+              <button type="button" class="btn btn-basic" data-bs-dismiss="modal" onclick="statEditor.reset()">Close</button>
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="editBey(wko.value, lko.value, wso.value, lso.value, wbst.value, lbst.value, dr.value)">Edit Bey Stats</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <!--import scripts-->
+    <script src="./pouchdb-7.3.1.js"></script>
+    <script src="./parts.js"></script>
+    <script src="./beyblade.js"></script>
+    <script src="./main.js"></script>
+
+    <!--
+        TODO:
+        make an actual website
+
+        Knonw Issues:
+        editing a bey doesnt aloowing for multiple edits without reselcting a bey from the list
+        Error catching for GRP and Sh is interacting strangely
+    -->
+    
+    
+
+</body>
+</html>
