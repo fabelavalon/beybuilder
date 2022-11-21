@@ -678,25 +678,25 @@ function editBey(wko, lko, wso, lso, wbst, lbst, dr){
         var statEditor = document.getElementById("statEditor");
         if(!err){
             if(wko){
-                doc.build.winsKO = wko;                
+                doc.build.winsKO = parseInt(wko);                
             }
             if(lko){
-                doc.build.loseKO = lko;                
+                doc.build.loseKO = parseInt(lko);                
             }
             if(wso){
-                doc.build.winsSO = wso;                
+                doc.build.winsSO = parseInt(wso);                
             }
             if(lso){
-                doc.build.loseSO = lso;                
+                doc.build.loseSO = parseInt(lso);                
             }
             if(wbst){
-                doc.build.winsBst = wbst;                
+                doc.build.winsBst = parseInt(wbst);                
             }
             if(lbst){
-                doc.build.loseBst = lbst;                
+                doc.build.loseBst = parseInt(lbst);                
             }
             if(dr){
-                doc.build.draws = dr;                
+                doc.build.draws = parseInt(dr);                
             }
             beyBladeDB.put(doc);
             statEditor.reset();
