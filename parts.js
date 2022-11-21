@@ -126,7 +126,7 @@ var drivers = [
     {"name":"Metal Drift", "weight":12.10, "abbv":"MDr", "wins":0, "losses":0, "draws":0, "id":14},
     {"name":"Metal Bearing Drift", "weight":12.30, "abbv":"MBDr", "wins":0, "losses":0, "draws":0, "id":15},
     {"name":"High Eternal", "weight":0, "abbv":"HEt", "wins":0, "losses":0, "draws":0, "id":16},
-    {"name":"High Hold", "weight":0, "abbv":"HH", "wins":0, "losses":0, "draws":0, "id":17},
+    {"name":"High Hold'", "weight":0, "abbv":"HH'", "wins":0, "losses":0, "draws":0, "id":17},
     {"name":"Just'", "weight":0, "abbv":"Js'", "wins":0, "losses":0, "draws":0, "id":18},
     {"name":"Kick", "weight":9.46, "abbv":"Kc", "wins":0, "losses":0, "draws":0, "id":19},
     {"name":"High Massive", "weight":0, "abbv":"HM", "wins":0, "losses":0, "draws":0, "id":20},
