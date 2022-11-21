@@ -83,6 +83,8 @@
           <div class="col-sm-4 col-xl-3" style="background-color:#20083a">
               <!--beyblade selector from database of beys-->
               <select id="dbSelectList" class="select-list" size="10" onchange="setDbBey()" multiple></select>
+              <br>
+              <button data-bs-toggle="modal" data-bs-target="#areYouSure2" class="btn btn-danger">Clear Database</button>
           </div>
           <div class="col-sm-4 col-xl-3" id="dbBeySpace" style="background-color:#20083a">
               <br>
@@ -112,6 +114,21 @@
             <div class="modal-footer">
               <button type="button" class="btn btn-basic" data-bs-dismiss="modal">Close</button>
               <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="deleteBey()">Yes, Delete this BeyBlade</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- delete beyblade popup -->
+      <div class="modal fade" id="areYouSure2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content" style="background-color:#20083a">
+            <div class="modal-body">
+                <h5 class="modal-title" id="exampleModalLabel2" style="text-align: center; color:white">Are You Sure?</h5>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-basic" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="deleteAllBeys()">Yes, Clear the ENTIRE databeyse</button>
             </div>
           </div>
         </div>

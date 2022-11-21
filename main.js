@@ -737,6 +737,33 @@ function deleteBey(){
     });
 }
 
+//fills the bey selection menu
+function deleteAllBeys() {
+
+    // var dbSelectList = document.getElementById("dbSelectList");
+
+    //clear the list so we dont just add more options
+    while (dbSelectList.options.length > 0) {                
+        dbSelectList.remove(0);
+    }        
+
+    beyBladeDB.allDocs({include_docs: true, descending: true}, function(err, doc) {
+        for(i = 0; i < doc.total_rows; i++){
+            if(!err){
+                beyBladeDB.remove(doc.rows[i].doc, function(err, doc){
+                    if(err){
+                        console.log(err);
+                    }
+                });
+            }
+            else{
+                console.log(err);
+            }
+       }
+    });
+
+}
+
 //displays the win loss and weight stats for the chosen beyblade
 function showBeybladeStats(bey, whichBey) {
 
