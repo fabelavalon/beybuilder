@@ -1,13 +1,14 @@
 /*
- *=======================================================*
- * BeyBuiler v0.9 for Dynamite Battle and Burst Ultimate *
- * Author: Fabel                                         *
- * Copyright 2022                                        *
- *=======================================================*
+ *========================================================*
+ * BeyBuilder v0.9 for Dynamite Battle and Burst Ultimate *
+ * Author: Fabel                                          *
+ * Copyright 2022                                         *
+ *========================================================*
  */
 
 //create beyblade database
 var beyBladeDB = new PouchDB("BeyBlades");
+var recordsDB = new PouchDB("Record");
 
 //import the parts lists
 var allCores = cores;
@@ -86,6 +87,21 @@ var dbBey;
 function main(){
 
     console.log("Welcome to BeyBuilder Version 0.9");
+
+    bey1CoreDropdown.value="random";
+    bey2CoreDropdown.value="random";
+
+    bey1BladeDropdown.value="random";
+    bey2BladeDropdown.value="random";
+
+    bey1ArmorDropdown.value="random";
+    bey2ArmorDropdown.value="random";
+
+    bey1DiscDropdown.value="random";
+    bey2DiscDropdown.value="random";
+
+    bey1DriverDropdown.value="random";
+    bey2DriverDropdown.value="random";
     
     //create and populate the drop downs with the parts from the database...
     //...the cores
@@ -506,6 +522,11 @@ var buttonContainer = document.getElementById("buttonContainer");
         });
         buttonContainer.append(drawButton);
 
+        //once both beys are made, make sure they have a matchup in the recordsDB
+        addRecord(bey1, bey2);
+        addRecord(bey2, bey1);
+        displayRecords();
+
     }
 
 }
@@ -516,44 +537,37 @@ function winnerChosen(buttonID){
     switch(buttonID){
         case "B1WKO":
             updateWinCounts(bey1, bey2, "KO");
-            showBeybladeStats(bey1,1);
-            showBeybladeStats(bey2,2);
+            updateRecords(bey1, bey2, "KO");
             winners.textContent = "The winner of this round is: " + bey1.name + " by Knockout!";
             break;
         case "B1WSO":
             updateWinCounts(bey1, bey2, "SO");
-            showBeybladeStats(bey1,1);
-            showBeybladeStats(bey2,2);
+            updateRecords(bey1, bey2, "SO");
             winners.textContent = "The winner of this round is: " + bey1.name + " by Sleep Out!";
             break;
         case "B1WBST":
             updateWinCounts(bey1, bey2, "burst");
-            showBeybladeStats(bey1,1);
-            showBeybladeStats(bey2,2);
+            updateRecords(bey1, bey2, "burst");
             winners.textContent = "The winner of this round is: " + bey1.name + " by Burst!";
             break;
         case "B2WKO":
             updateWinCounts(bey2, bey1, "KO");
-            showBeybladeStats(bey1,1);
-            showBeybladeStats(bey2,2);
+            updateRecords(bey2, bey1, "KO");
             winners.textContent = "The winner of this round is: " + bey2.name + " by Knockout!";
             break;
         case "B2WSO":
             updateWinCounts(bey2, bey1, "SO");
-            showBeybladeStats(bey1,1);
-            showBeybladeStats(bey2,2);
+            updateRecords(bey2, bey1, "SO");
             winners.textContent = "The winner of this round is: " + bey2.name + " by Sleep Out!";
             break;
         case "B2WBST":
             updateWinCounts(bey2, bey1, "burst");
-            showBeybladeStats(bey1,1);
-            showBeybladeStats(bey2,2);
+            updateRecords(bey2, bey1, "burst");
             winners.textContent = "The winner of this round is: " + bey2.name + " by Burst!";
             break;
         case "draw":
             updateWinCounts(bey1, bey2, "draw");
-            showBeybladeStats(bey1,1);
-            showBeybladeStats(bey2,2);
+            updateRecords(bey1, bey2, "draw");
             winners.textContent = "It ended in a Draw!";
             break;
         default:
@@ -578,6 +592,167 @@ function addBeyblade(bey) {
         else{
             console.log(err);
         }
+    });
+
+}
+
+//tracking for actual past match ups, so we know what build blades won or lost against, instead of anon stats
+function addRecord(challenger, defender){
+
+    var winRecord = {
+        _id: challenger.id + " " + defender.id,
+        title: challenger.name + " vs " + defender.name,
+        wko: 0,
+        lko: 0,
+        wso: 0,
+        lso: 0,
+        wbst: 0,
+        lbst: 0,
+        draws: 0
+    }
+
+    recordsDB.put(winRecord, function callback(err, result){
+        if(!err){
+            console.log("Successfully added a record");
+        }
+        else{
+            console.log(err);
+        }
+    });
+
+}
+
+function updateRecords(winner, loser, outcome){
+
+    var record1Id = winner.id + " " + loser.id;
+    var record2Id = loser.id + " " + winner.id;
+    addRecord(winner, loser);
+    addRecord(loser, winner)
+
+    switch(outcome){
+        case "KO":
+            recordsDB.get(record1Id, function(err, doc) {
+                if(!err){
+                    doc.wko += 1;
+                    recordsDB.put(doc);
+                    displayRecords();
+                }
+                else{
+                    console.log(err);
+                }
+            });
+            recordsDB.get(record2Id, function(err, doc) {
+                if(!err){
+                    doc.lko += 1;
+                    recordsDB.put(doc);
+                    displayRecords();
+                }
+                else{
+                    console.log(err);
+                }
+            });
+            break;
+        case "SO":
+            recordsDB.get(record1Id, function(err, doc) {
+                if(!err){
+                    doc.wso += 1;
+                    recordsDB.put(doc);
+                    displayRecords();
+                }
+                else{
+                    console.log(err);
+                }
+            });
+            recordsDB.get(record2Id, function(err, doc) {
+                if(!err){
+                    doc.lso += 1;
+                    recordsDB.put(doc);
+                    displayRecords();
+                }
+                else{
+                    console.log(err);
+                }
+            });
+            break;
+        case "burst":
+            recordsDB.get(record1Id, function(err, doc) {
+                if(!err){
+                    doc.wbst += 1;
+                    recordsDB.put(doc);
+                    displayRecords();
+                }
+                else{
+                    console.log(err);
+                }
+            });
+            recordsDB.get(record2Id, function(err, doc) {
+                if(!err){
+                    doc.lbst += 1;
+                    recordsDB.put(doc);
+                    displayRecords();
+                }
+                else{
+                    console.log(err);
+                }
+            });
+            break;
+        case "draw":
+            recordsDB.get(record1Id, function(err, doc) {
+                if(!err){
+                    doc.draws += 1;
+                    recordsDB.put(doc);
+                    displayRecords();
+                }
+                else{
+                    console.log(err);
+                }
+            });
+            recordsDB.get(record2Id, function(err, doc) {
+                if(!err){
+                    doc.draws += 1;
+                    recordsDB.put(doc);
+                    displayRecords();
+                }
+                else{
+                    console.log(err);
+                }
+            });
+            break;
+        default:
+            console.log("Something went wrong. Record not added")
+            
+    }
+
+}
+
+function displayRecords(){
+
+    var record1 = document.getElementById("record1");
+    var ko1 = document.getElementById("ko1");
+    var so1 = document.getElementById("so1");
+    var bst1 = document.getElementById("bst1");
+
+    var record2 = document.getElementById("record2");
+    var ko2 = document.getElementById("ko2");
+    var so2 = document.getElementById("so2");
+    var bst2 = document.getElementById("bst2");
+
+    var draws = document.getElementById("draws");
+
+    var recordID = bey1.id + " " + bey2.id;
+
+    recordsDB.get(recordID, function(err, doc){
+        record1.textContent = bey1.name;
+        ko1.textContent = doc.wko;
+        so1.textContent = doc.wso;
+        bst1.textContent = doc.wbst;
+
+        record2.textContent = bey2.name;
+        ko2.textContent = doc.lko;
+        so2.textContent = doc.lso;
+        bst2.textContent =  doc.lbst;
+        
+        draws.textContent = doc.draws;
     });
 
 }

@@ -90,3 +90,13 @@
 .show>.btn-basic.dropdown-toggle:focus {
     box-shadow: 0 0 0 .2rem rgba(190, 190, 190, 0.5);
 }
+
+td, tr {
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+    border-color: #FFF;
+}
+
+table{
+    border: 1px solid #fff;
+}
