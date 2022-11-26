@@ -2,6 +2,9 @@
 
 BeyBuilder is a Beyblade stat tracker and random build generator for Dynamite Battle and Burst Ultimate parts
 
+![image](https://user-images.githubusercontent.com/118684863/204066843-5d12c0dd-ff41-421e-a197-220b825db0f5.png)
+
+
 # How to use
 
 - Open the [BeyBuilder website here](https://fabelavalon.github.io/beybuilder/)
