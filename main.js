@@ -1,10 +1,8 @@
-/*
- *========================================================*
- * BeyBuilder v0.9 for Dynamite Battle and Burst Ultimate *
- * Author: Fabel                                          *
- * Copyright 2022                                         *
- *========================================================*
- */
+/*==========================================================*
+ * BeyBuilder v1.0 for Dynamite Battle and Burst Ultimate   *
+ * Author: Fabel                                            *
+ * Copyright 2022                                           *
+ *==========================================================*/
 
 //create beyblade database
 var beyBladeDB = new PouchDB("BeyBlades");
@@ -17,7 +15,7 @@ var allArmors = armors;
 var allDiscs = forgeDiscs;
 var allDrivers = drivers;
 
-//create the elements for the win buttons
+//create the elements for the buttons that will get generated via this script
 var bey1WinKO = document.createElement("button");
 var bey1WinSO = document.createElement("button");
 var bey1WinBst = document.createElement("button");
@@ -30,23 +28,35 @@ var bey2Statbtn = document.createElement("button");
 var showAllBeysbtn = document.createElement("button");
 var removeBeybtn = document.createElement("button");
 var editBeybtn = document.createElement("button");
+var showMatchupbtn = document.createElement("button");
 
-//import the elements for the dropdowns
+//import the elements for the dropdowns...
+//...for bey1
 var bey1BladeDropdown = document.getElementById("bey1Blade");
 var bey1CoreDropdown = document.getElementById("bey1Core");
 var bey1DiscDropdown = document.getElementById("bey1Disc");
 var bey1DriverDropdown = document.getElementById("bey1Driver");
 var bey1ArmorDropdown = document.getElementById("bey1Armor");
 
+//...for bey2
 var bey2BladeDropdown = document.getElementById("bey2Blade");
 var bey2CoreDropdown = document.getElementById("bey2Core");
 var bey2DiscDropdown = document.getElementById("bey2Disc");
 var bey2DriverDropdown = document.getElementById("bey2Driver");
 var bey2ArmorDropdown = document.getElementById("bey2Armor");
 
+//...for the parts records
+var bladeDropdown = document.getElementById("blade");
+var coreDropdown = document.getElementById("core");
+var discDropdown = document.getElementById("disc");
+var driverDropdown = document.getElementById("driver");
+var armorDropdown = document.getElementById("armor");
+
+//...for the dbList
 var selectedBey = document.getElementById("dbSelectList");
 
-//import elements for the logging
+//import elements for the logging...
+//..dbBey stats
 var dbBeyName = document.getElementById("dbBeyIs");
 var dbBeyStats = document.getElementById("dbBeyStats");
 var dbBeyKO = document.getElementById("dbBeyKO");
@@ -55,6 +65,7 @@ var dbBeyBst = document.getElementById("dbBeyBst");
 var dbBeyDraw = document.getElementById("dbBeyDraw");
 var dbBeySpace = document.getElementById("dbBeySpace");
 
+//bey1 stats
 var bey1Is = document.getElementById("bey1Is");
 var bey1Stats = document.getElementById("bey1Stats");
 var bey1KO = document.getElementById("bey1KO");
@@ -62,6 +73,7 @@ var bey1SO = document.getElementById("bey1SO");
 var bey1Bst = document.getElementById("bey1Bst");
 var bey1Draw = document.getElementById("bey1Draw");
 
+//bey2 stats
 var bey2Is = document.getElementById("bey2Is");
 var bey2Stats = document.getElementById("bey2Stats");
 var bey2KO = document.getElementById("bey2KO");
@@ -69,8 +81,19 @@ var bey2SO = document.getElementById("bey2SO");
 var bey2Bst = document.getElementById("bey2Bst");
 var bey2Draw = document.getElementById("bey2Draw");
 
+//parts stats
+var partIs = document.getElementById("partIs");
+var partStats = document.getElementById("partStats");
+var partKO = document.getElementById("partKO");
+var partSO = document.getElementById("partSO");
+var partBst = document.getElementById("partBst");
+var partDraw = document.getElementById("partDraw");
+
+//everything else
 var error = document.getElementById("error");
 var winners = document.getElementById("winnerLog");
+var matchupSpace = document.getElementById("matchupSpace");
+var matchupBey = document.getElementById("matchupBey");
 
 //used to generate the win buttons after both beys are selected
 var wasBey1Generated = false;
@@ -84,82 +107,108 @@ var bey1;
 var bey2;
 var dbBey;
 
+//runs on launch, fills draop downs and database list
 function main(){
 
-    console.log("Welcome to BeyBuilder Version 0.9");
+    console.log("Welcome to BeyBuilder Version 1.0");
 
     bey1CoreDropdown.value="random";
     bey2CoreDropdown.value="random";
+    coreDropdown.value="random";
 
     bey1BladeDropdown.value="random";
     bey2BladeDropdown.value="random";
+    bladeDropdown.value="random";
 
     bey1ArmorDropdown.value="random";
     bey2ArmorDropdown.value="random";
+    armorDropdown.value="random";
 
     bey1DiscDropdown.value="random";
     bey2DiscDropdown.value="random";
+    discDropdown.value="random";
 
     bey1DriverDropdown.value="random";
     bey2DriverDropdown.value="random";
+    driverDropdown.value="random";
     
     //create and populate the drop downs with the parts from the database...
     //...the cores
     for (var i = 0; i < allCores.length; i++) { 
         var options = document.createElement("option");
         var option2 = document.createElement("option");
+        var option3 = document.createElement("option");
         options.textContent = allCores[i].name;
         options.value = allCores[i].id;
         option2.textContent = allCores[i].name;
         option2.value = allCores[i].id;
+        option3.textContent = allCores[i].name;
+        option3.value = allCores[i].id;
         bey1CoreDropdown.appendChild(options);
         bey2CoreDropdown.appendChild(option2);
+        coreDropdown.appendChild(option3);
     }
     //...the Blades
     for (var i = 0; i < allBlades.length; i++) {
         var options = document.createElement("option");
         var option2 = document.createElement("option");
+        var option3 = document.createElement("option");
         options.textContent = allBlades[i].name;
         options.value = allBlades[i].id;
         option2.textContent = allBlades[i].name;
         option2.value = allBlades[i].id;
+        option3.textContent = allBlades[i].name;
+        option3.value = allBlades[i].id;
         bey1BladeDropdown.appendChild(options);
         bey2BladeDropdown.appendChild(option2);
+        bladeDropdown.appendChild(option3);
     }
     //...the armors
     for (var i = 0; i < allArmors.length; i++) {
         var options = document.createElement("option");
         var option2 = document.createElement("option");
+        var option3 = document.createElement("option");
         options.textContent = allArmors[i].name;
         options.value = allArmors[i].id;
         option2.textContent = allArmors[i].name;
         option2.value = allArmors[i].id;
+        option3.textContent = allArmors[i].name;
+        option3.value = allArmors[i].id;
         bey1ArmorDropdown.appendChild(options);
         bey2ArmorDropdown.appendChild(option2);
+        armorDropdown.appendChild(option3);
         
     }
     //...the forge discs
     for (var i = 0; i < allDiscs.length; i++) {
         var options = document.createElement("option");
         var option2 = document.createElement("option");
+        var option3 = document.createElement("option");
         options.textContent = allDiscs[i].name;
         options.value = allDiscs[i].id;
         option2.textContent = allDiscs[i].name;
         option2.value = allDiscs[i].id;
+        option3.textContent = allDiscs[i].name;
+        option3.value = allDiscs[i].id;
         bey1DiscDropdown.appendChild(options);
         bey2DiscDropdown.appendChild(option2);
+        discDropdown.appendChild(option3);
         
     }
     //...the drivers   
     for (var i = 0; i < allDrivers.length; i++) {
         var options = document.createElement("option");
         var option2 = document.createElement("option");
+        var option3 = document.createElement("option");
         options.textContent = allDrivers[i].name;
         options.value = allDrivers[i].id;
         option2.textContent = allDrivers[i].name;
         option2.value = allDrivers[i].id;
+        option3.textContent = allDrivers[i].name;
+        option3.value = allDrivers[i].id;
         bey1DriverDropdown.appendChild(options);
         bey2DriverDropdown.appendChild(option2);
+        driverDropdown.appendChild(option3);
         
     }
 
@@ -167,19 +216,6 @@ function main(){
     showBeyblades();
     
 };
-
-//turns out JavaScript doesn't have a random number function that just gives an int
-function getRandomInt(max) {
-
-    return Math.floor(Math.random() * max);
-
-};
-
-//JS math functions suck
-function round(num, places) {
-    var multiplier = Math.pow(10, places);
-    return Math.round(num * multiplier) / multiplier;
-}
 
 //generate a beyblade based on the selections for the first set of drop downs
 function generateBey1(){
@@ -303,7 +339,7 @@ function generateBey1(){
 
 }
 
-//generate a beybalde based on the selections for the second set of drop downs
+//generate a beyblade based on the selections for the second set of drop downs
 function generateBey2(){
 
     //uses the id's of all parts for easy call
@@ -463,7 +499,7 @@ var buttonContainer = document.getElementById("buttonContainer");
         buttonContainer.append(bey1WinKO);
         
         //bey1 win by so
-        bey1WinSO.innerHTML = "Bey 1 OS Win";
+        bey1WinSO.innerHTML = "Bey 1 SO Win";
         bey1WinSO.value = "B1WSO";
         bey1WinSO.classList.add("btn");
         bey1WinSO.classList.add("btn-basic");
@@ -525,6 +561,8 @@ var buttonContainer = document.getElementById("buttonContainer");
         //once both beys are made, make sure they have a matchup in the recordsDB
         addRecord(bey1, bey2);
         addRecord(bey2, bey1);
+        updateRecords(bey1, bey2, "update");
+        updateRecords(bey2, bey1, "update");
         displayRecords();
 
     }
@@ -589,9 +627,9 @@ function addBeyblade(bey) {
             showBeyblades();
             console.log('Successfully added a beyblade!');
         }
-        else{
-            console.log(err);
-        }
+        // else{
+        //     console.log(err);
+        // }
     });
 
 }
@@ -608,10 +646,12 @@ function addRecord(challenger, defender){
         lso: 0,
         wbst: 0,
         lbst: 0,
-        draws: 0
+        draws: 0,
+        challenger: challenger,
+        defender: defender
     }
 
-    recordsDB.put(winRecord, function callback(err, result){
+    recordsDB.put(winRecord, function callback(err, doc){
         if(!err){
             console.log("Successfully added a record");
         }
@@ -620,230 +660,6 @@ function addRecord(challenger, defender){
         }
     });
 
-}
-
-function updateRecords(winner, loser, outcome){
-
-    var record1Id = winner.id + " " + loser.id;
-    var record2Id = loser.id + " " + winner.id;
-    addRecord(winner, loser);
-    addRecord(loser, winner)
-
-    switch(outcome){
-        case "KO":
-            recordsDB.get(record1Id, function(err, doc) {
-                if(!err){
-                    doc.wko += 1;
-                    recordsDB.put(doc);
-                    displayRecords();
-                }
-                else{
-                    console.log(err);
-                }
-            });
-            recordsDB.get(record2Id, function(err, doc) {
-                if(!err){
-                    doc.lko += 1;
-                    recordsDB.put(doc);
-                    displayRecords();
-                }
-                else{
-                    console.log(err);
-                }
-            });
-            break;
-        case "SO":
-            recordsDB.get(record1Id, function(err, doc) {
-                if(!err){
-                    doc.wso += 1;
-                    recordsDB.put(doc);
-                    displayRecords();
-                }
-                else{
-                    console.log(err);
-                }
-            });
-            recordsDB.get(record2Id, function(err, doc) {
-                if(!err){
-                    doc.lso += 1;
-                    recordsDB.put(doc);
-                    displayRecords();
-                }
-                else{
-                    console.log(err);
-                }
-            });
-            break;
-        case "burst":
-            recordsDB.get(record1Id, function(err, doc) {
-                if(!err){
-                    doc.wbst += 1;
-                    recordsDB.put(doc);
-                    displayRecords();
-                }
-                else{
-                    console.log(err);
-                }
-            });
-            recordsDB.get(record2Id, function(err, doc) {
-                if(!err){
-                    doc.lbst += 1;
-                    recordsDB.put(doc);
-                    displayRecords();
-                }
-                else{
-                    console.log(err);
-                }
-            });
-            break;
-        case "draw":
-            recordsDB.get(record1Id, function(err, doc) {
-                if(!err){
-                    doc.draws += 1;
-                    recordsDB.put(doc);
-                    displayRecords();
-                }
-                else{
-                    console.log(err);
-                }
-            });
-            recordsDB.get(record2Id, function(err, doc) {
-                if(!err){
-                    doc.draws += 1;
-                    recordsDB.put(doc);
-                    displayRecords();
-                }
-                else{
-                    console.log(err);
-                }
-            });
-            break;
-        default:
-            console.log("Something went wrong. Record not added")
-            
-    }
-
-}
-
-function displayRecords(){
-
-    var record1 = document.getElementById("record1");
-    var ko1 = document.getElementById("ko1");
-    var so1 = document.getElementById("so1");
-    var bst1 = document.getElementById("bst1");
-
-    var record2 = document.getElementById("record2");
-    var ko2 = document.getElementById("ko2");
-    var so2 = document.getElementById("so2");
-    var bst2 = document.getElementById("bst2");
-
-    var draws = document.getElementById("draws");
-
-    var recordID = bey1.id + " " + bey2.id;
-
-    recordsDB.get(recordID, function(err, doc){
-        record1.textContent = bey1.name;
-        ko1.textContent = doc.wko;
-        so1.textContent = doc.wso;
-        bst1.textContent = doc.wbst;
-
-        record2.textContent = bey2.name;
-        ko2.textContent = doc.lko;
-        so2.textContent = doc.lso;
-        bst2.textContent =  doc.lbst;
-        
-        draws.textContent = doc.draws;
-    });
-
-}
-
-//fills the bey selection menu
-function showBeyblades() {
-
-    var dbSelectList = document.getElementById("dbSelectList");
-
-    //clear the list so we dont just add more options
-    while (dbSelectList.options.length > 0) {                
-        dbSelectList.remove(0);
-    }        
-
-    beyBladeDB.allDocs({include_docs: true, descending: true}, function(err, doc) {
-        doc.rows.sort(function(a, b){
-            return (''+a.doc.build.name).localeCompare(b.doc.build.name);
-        });
-        for(i = 0; i < doc.total_rows; i++){
-            if(!err){
-                var options = document.createElement("option");
-                options.textContent = doc.rows[i].doc.build.name;
-                options.value = doc.rows[i].doc._id;
-                dbSelectList.appendChild(options);
-            }
-            else{
-                console.log(err);
-            }
-       }
-    });
-
-}
-
-//shows selected bey's stats and allows for the user to set the selected bey to bey 1 or 2
-function setDbBey(){
-
-    beyBladeDB.get(selectedBey.value, function(err, doc) {
-        if(!err){
-            dbBeyName.textContent = doc.build.name;
-            dbBeyStats.textContent = "Weight: " + round(doc.build.weight,2) + " grams.";
-            dbBeyKO.textContent = "KO Win/Loss: " + doc.build.winsKO + " / " + doc.build.loseKO;
-            dbBeySO.textContent = "SO Win/Loss: " + doc.build.winsSO + " / " + doc.build.loseSO;
-            dbBeyBst.textContent = "Burst Win/Loss: " + doc.build.winsBst + " / " + doc.build.loseBst;
-            dbBeyDraw.textContent = "Draws: " + doc.build.draws;
-            dbBey = doc.build;
-
-            //set as bey1 button
-            bey1Statbtn.innerHTML = "Set as Bey 1";
-            bey1Statbtn.classList.add("btn");
-            bey1Statbtn.classList.add("btn-basic");
-            bey1Statbtn.addEventListener("click", function() {
-                bey1=dbBey;
-                wasBey1Generated = true;
-                showBeybladeStats(bey1, 1);
-                createWinButtons()
-            });
-            dbBeySpace.append(bey1Statbtn);
-
-            //set as bey2 button
-            bey2Statbtn.innerHTML = "Set as Bey 2";
-            bey2Statbtn.classList.add("btn");
-            bey2Statbtn.classList.add("btn-basic");
-            bey2Statbtn.addEventListener("click", function() {
-                bey2=dbBey;
-                wasBey2Generated = true;
-                showBeybladeStats(bey2, 2);
-                createWinButtons()
-            });
-            dbBeySpace.append(bey2Statbtn);
-
-            //edit bey stats in database
-            editBeybtn.innerHTML = "Edit Bey Stats";
-            editBeybtn.classList.add("btn");
-            editBeybtn.classList.add("btn-basic");
-            editBeybtn.setAttribute("data-bs-toggle", "modal");
-            editBeybtn.setAttribute("data-bs-target", "#editBeyPopup");
-            dbBeySpace.append(editBeybtn);
-
-            //delete bey from database button
-            removeBeybtn.innerHTML = "Delete Bey";
-            removeBeybtn.classList.add("btn");
-            removeBeybtn.classList.add("btn-danger");
-            removeBeybtn.setAttribute("data-bs-toggle", "modal");
-            removeBeybtn.setAttribute("data-bs-target", "#areYouSure");
-            dbBeySpace.append(removeBeybtn);
-
-        }
-        else{
-            console.log(err);
-        }
-    });
 }
 
 //edit beyblade win stats incase of mis inputs
@@ -888,34 +704,243 @@ function editBey(wko, lko, wso, lso, wbst, lbst, dr){
 
 }
 
-//delete a bey from the system
-function deleteBey(){
+//update the records database with a result is chosen
+function updateRecords(winner, loser, outcome){
 
-    var dbSelectList = document.getElementById("dbSelectList");
+    var record1Id = winner.id + " " + loser.id;
+    var record2Id = loser.id + " " + winner.id;
+    addRecord(winner, loser);
+    addRecord(loser, winner)
 
-    beyBladeDB.get(selectedBey.value, function(err, doc) {
-        if(!err){
-            beyBladeDB.remove(doc, function(err, doc){
+    switch(outcome){
+        case "KO":
+            recordsDB.get(record1Id, function(err, doc) {
                 if(!err){
-                    for (var i=0; i<dbSelectList.length; i++) {
-                        if (dbSelectList.options[i].value == selectedBey.value){
-                            dbSelectList.remove(i);
-                        }
-                    }
-                    showBeyblades();
+                    doc.wko += 1;
+                    recordsDB.put(doc);
+                    displayRecords();
                 }
-                else{
-                    console.log(err);
-                }
+                // else{
+                //     console.log(err);
+                // }
             });
-        }
-    });
+            recordsDB.get(record2Id, function(err, doc) {
+                if(!err){
+                    doc.lko += 1;
+                    recordsDB.put(doc);
+                    displayRecords();
+                }
+                // else{
+                //     console.log(err);
+                // }
+            });
+            break;
+        case "SO":
+            recordsDB.get(record1Id, function(err, doc) {
+                if(!err){
+                    doc.wso += 1;
+                    recordsDB.put(doc);
+                    displayRecords();
+                }
+                // else{
+                //     console.log(err);
+                // }
+            });
+            recordsDB.get(record2Id, function(err, doc) {
+                if(!err){
+                    doc.lso += 1;
+                    recordsDB.put(doc);
+                    displayRecords();
+                }
+                // else{
+                //     console.log(err);
+                // }
+            });
+            break;
+        case "burst":
+            recordsDB.get(record1Id, function(err, doc) {
+                if(!err){
+                    doc.wbst += 1;
+                    recordsDB.put(doc);
+                    displayRecords();
+                }
+                // else{
+                //     console.log(err);
+                // }
+            });
+            recordsDB.get(record2Id, function(err, doc) {
+                if(!err){
+                    doc.lbst += 1;
+                    recordsDB.put(doc);
+                    displayRecords();
+                }
+                // else{
+                //     console.log(err);
+                // }
+            });
+            break;
+        case "draw":
+            recordsDB.get(record1Id, function(err, doc) {
+                if(!err){
+                    doc.draws += 1;
+                    recordsDB.put(doc);
+                    displayRecords();
+                }
+                // else{
+                //     console.log(err);
+                // }
+            });
+            recordsDB.get(record2Id, function(err, doc) {
+                if(!err){
+                    doc.draws += 1;
+                    recordsDB.put(doc);
+                    displayRecords();
+                }
+                // else{
+                //     console.log(err);
+                // }
+            });
+            break;
+        case "update":
+            recordsDB.get(record1Id, function(err, doc) {
+                if(!err){
+                    doc.challenger = winner;
+                    doc.defender = loser;
+                    recordsDB.put(doc);
+                }
+                // else{
+                //     console.log(err);
+                // }
+            });
+            recordsDB.get(record2Id, function(err, doc) {
+                if(!err){
+                    doc.challenger = loser;
+                    doc.defender = winner;
+                    recordsDB.put(doc);
+                }
+                // else{
+                //     console.log(err);
+                // }
+            });
+            break;
+        default:
+            console.log("Something went wrong. Record not added")
+            
+    }
+
+}
+
+//updates the win and loss counts for both beys when a result is chosen
+function updateWinCounts(winner, loser, outcome){
+
+    switch(outcome){
+        case "KO":
+        beyBladeDB.get(winner.id, function(err, doc) {
+            if(!err){
+                doc.build.winsKO += 1;
+                beyBladeDB.put(doc);
+                showBeybladeStats(bey1,1);
+            }
+            // else{
+            //     console.log(err);
+            // }
+        });
+    
+        beyBladeDB.get(loser.id, function(err, doc) {
+            if(!err){
+                doc.build.loseKO += 1;
+                beyBladeDB.put(doc);
+                showBeybladeStats(bey2,2);
+            }
+            // else{
+            //     console.log(err);
+            // }
+        });
+        break;
+
+        case "SO":
+            beyBladeDB.get(winner.id, function(err, doc) {
+                if(!err){
+                    doc.build.winsSO += 1;
+                    beyBladeDB.put(doc);
+                    showBeybladeStats(bey1,1);
+                }
+                // else{
+                //     console.log(err);
+                // }
+            });
+        
+            beyBladeDB.get(loser.id, function(err, doc) {
+                if(!err){
+                    doc.build.loseSO += 1;
+                    beyBladeDB.put(doc);
+                    showBeybladeStats(bey2,2);
+                }
+                // else{
+                //     console.log(err);
+                // }
+            });
+        break;
+
+        case "burst":
+            beyBladeDB.get(winner.id, function(err, doc) {
+                if(!err){
+                    doc.build.winsBst += 1;
+                    beyBladeDB.put(doc);
+                    showBeybladeStats(bey1,1);
+                }
+                // else{
+                //     console.log(err);
+                // }
+            });
+        
+            beyBladeDB.get(loser.id, function(err, doc) {
+                if(!err){
+                    doc.build.loseBst += 1;
+                    beyBladeDB.put(doc);
+                    showBeybladeStats(bey2,2);
+                }
+                // else{
+                //     console.log(err);
+                // }
+            });
+        break;
+
+        case "draw":
+            beyBladeDB.get(winner.id, function(err, doc) {
+                if(!err){
+                    doc.build.draws += 1;
+                    beyBladeDB.put(doc);
+                    showBeybladeStats(bey1,1);
+                }
+                // else{
+                //     console.log(err);
+                // }
+            });
+        
+            beyBladeDB.get(loser.id, function(err, doc) {
+                if(!err){
+                    doc.build.draws += 1;
+                    beyBladeDB.put(doc);
+                    showBeybladeStats(bey2,2);
+                }
+                // else{
+                //     console.log(err);
+                // }
+            });
+        break;
+
+        default:
+            console.log("something went wrong with updating wins");
+
+    }
+    
 }
 
 //fills the bey selection menu
-function deleteAllBeys() {
+function showBeyblades() {
 
-    // var dbSelectList = document.getElementById("dbSelectList");
+    var dbSelectList = document.getElementById("dbSelectList");
 
     //clear the list so we dont just add more options
     while (dbSelectList.options.length > 0) {                
@@ -923,20 +948,93 @@ function deleteAllBeys() {
     }        
 
     beyBladeDB.allDocs({include_docs: true, descending: true}, function(err, doc) {
+        doc.rows.sort(function(a, b){
+            return (''+a.doc.build.name).localeCompare(b.doc.build.name);
+        });
         for(i = 0; i < doc.total_rows; i++){
             if(!err){
-                beyBladeDB.remove(doc.rows[i].doc, function(err, doc){
-                    if(err){
-                        console.log(err);
-                    }
-                });
+                var options = document.createElement("option");
+                options.textContent = doc.rows[i].doc.build.name;
+                options.value = doc.rows[i].doc._id;
+                dbSelectList.appendChild(options);
             }
-            else{
-                console.log(err);
-            }
+            // else{
+            //     console.log(err);
+            // }
        }
     });
 
+}
+
+//shows selected bey's stats and allows for the user to set the selected bey to bey 1 or 2
+function setDbBey(){
+
+    beyBladeDB.get(selectedBey.value, function(err, doc) {
+        if(!err){
+            dbBeyName.textContent = doc.build.name;
+            dbBeyStats.textContent = "Weight: " + round(doc.build.weight,2) + " grams. Spin: " + doc.build.spin;
+            dbBeyKO.textContent = "KO Win/Loss: " + doc.build.winsKO + " / " + doc.build.loseKO;
+            dbBeySO.textContent = "SO Win/Loss: " + doc.build.winsSO + " / " + doc.build.loseSO;
+            dbBeyBst.textContent = "Burst Win/Loss: " + doc.build.winsBst + " / " + doc.build.loseBst;
+            dbBeyDraw.textContent = "Draws: " + doc.build.draws;
+            dbBey = doc.build;
+
+            //set as bey1 button
+            bey1Statbtn.innerHTML = "Set as Bey 1";
+            bey1Statbtn.classList.add("btn");
+            bey1Statbtn.classList.add("btn-basic");
+            bey1Statbtn.addEventListener("click", function() {
+                bey1=dbBey;
+                wasBey1Generated = true;
+                showBeybladeStats(bey1, 1);
+                createWinButtons()
+            });
+            dbBeySpace.append(bey1Statbtn);
+
+            //set as bey2 button
+            bey2Statbtn.innerHTML = "Set as Bey 2";
+            bey2Statbtn.classList.add("btn");
+            bey2Statbtn.classList.add("btn-basic");
+            bey2Statbtn.addEventListener("click", function() {
+                bey2=dbBey;
+                wasBey2Generated = true;
+                showBeybladeStats(bey2, 2);
+                createWinButtons()
+            });
+            dbBeySpace.append(bey2Statbtn);
+
+            //edit bey stats in database
+            editBeybtn.innerHTML = "Edit Bey Stats";
+            editBeybtn.classList.add("btn");
+            editBeybtn.classList.add("btn-basic");
+            editBeybtn.setAttribute("data-bs-toggle", "modal");
+            editBeybtn.setAttribute("data-bs-target", "#editBeyPopup");
+            dbBeySpace.append(editBeybtn);
+
+            //show matchup history button
+            showMatchupbtn.innerHTML = "Show Matchup History";
+            showMatchupbtn.classList.add("btn");
+            showMatchupbtn.classList.add("btn-basic");
+            showMatchupbtn.setAttribute("data-bs-toggle", "modal");
+            showMatchupbtn.setAttribute("data-bs-target", "#matchupHist");
+            showMatchupbtn.addEventListener("click", function() {
+                populateMatchHist(dbBey);
+            });
+            dbBeySpace.append(showMatchupbtn);
+
+            //delete bey from database button
+            removeBeybtn.innerHTML = "Delete Bey";
+            removeBeybtn.classList.add("btn");
+            removeBeybtn.classList.add("btn-danger");
+            removeBeybtn.setAttribute("data-bs-toggle", "modal");
+            removeBeybtn.setAttribute("data-bs-target", "#areYouSure");
+            dbBeySpace.append(removeBeybtn);
+
+        }
+        // else{
+        //     console.log(err);
+        // }
+    });
 }
 
 //displays the win loss and weight stats for the chosen beyblade
@@ -953,9 +1051,9 @@ function showBeybladeStats(bey, whichBey) {
                     bey1Bst.textContent = "Burst Win/Loss: " + doc.build.winsBst + " / " + doc.build.loseBst;
                     bey1Draw.textContent = "Draws: " + doc.build.draws;
                 }
-                else{
-                    console.log(err);
-                }
+                // else{
+                //     console.log(err);
+                // }
             });
         break;
         case 2:
@@ -968,120 +1066,288 @@ function showBeybladeStats(bey, whichBey) {
                     bey2Bst.textContent = "Burst Win/Loss: " + doc.build.winsBst + " / " + doc.build.loseBst;
                     bey2Draw.textContent = "Draws: " + doc.build.draws;
                 }
-                else{
-                    console.log(err);
-                }
+                // else{
+                //     console.log(err);
+                // }
             });
         break;
     }
 
 }
 
-//updates the win and loss counts for both beys when a result is chosen
-function updateWinCounts(winner, loser, outcome){
+//fill matchup table on main screen when both beys are chosen
+function displayRecords(){
 
-    switch(outcome){
-        case "KO":
-        beyBladeDB.get(winner.id, function(err, doc) {
-            if(!err){
-                doc.build.winsKO += 1;
-                beyBladeDB.put(doc);
-                showBeybladeStats(bey1,1);
-            }
-            else{
-                console.log(err);
-            }
-        });
-    
-        beyBladeDB.get(loser.id, function(err, doc) {
-            if(!err){
-                doc.build.loseKO += 1;
-                beyBladeDB.put(doc);
-                showBeybladeStats(bey2,2);
-            }
-            else{
-                console.log(err);
-            }
-        });
-        break;
+    var record1 = document.getElementById("record1");
+    var ko1 = document.getElementById("ko1");
+    var so1 = document.getElementById("so1");
+    var bst1 = document.getElementById("bst1");
 
-        case "SO":
-            beyBladeDB.get(winner.id, function(err, doc) {
-                if(!err){
-                    doc.build.winsSO += 1;
-                    beyBladeDB.put(doc);
-                    showBeybladeStats(bey1,1);
-                }
-                else{
-                    console.log(err);
-                }
-            });
+    var record2 = document.getElementById("record2");
+    var ko2 = document.getElementById("ko2");
+    var so2 = document.getElementById("so2");
+    var bst2 = document.getElementById("bst2");
+
+    var draws = document.getElementById("draws");
+
+    var recordID = bey1.id + " " + bey2.id;
+
+    recordsDB.get(recordID, function(err, doc){
+        record1.textContent = bey1.name;
+        ko1.textContent = doc.wko;
+        so1.textContent = doc.wso;
+        bst1.textContent = doc.wbst;
+
+        record2.textContent = bey2.name;
+        ko2.textContent = doc.lko;
+        so2.textContent = doc.lso;
+        bst2.textContent =  doc.lbst;
         
-            beyBladeDB.get(loser.id, function(err, doc) {
-                if(!err){
-                    doc.build.loseSO += 1;
-                    beyBladeDB.put(doc);
-                    showBeybladeStats(bey2,2);
-                }
-                else{
-                    console.log(err);
-                }
-            });
-        break;
+        draws.textContent = doc.draws;
+    });
 
-        case "burst":
-            beyBladeDB.get(winner.id, function(err, doc) {
-                if(!err){
-                    doc.build.winsBst += 1;
-                    beyBladeDB.put(doc);
-                    showBeybladeStats(bey1,1);
-                }
-                else{
-                    console.log(err);
-                }
-            });
-        
-            beyBladeDB.get(loser.id, function(err, doc) {
-                if(!err){
-                    doc.build.loseBst += 1;
-                    beyBladeDB.put(doc);
-                    showBeybladeStats(bey2,2);
-                }
-                else{
-                    console.log(err);
-                }
-            });
-        break;
-
-        case "draw":
-            beyBladeDB.get(winner.id, function(err, doc) {
-                if(!err){
-                    doc.build.draws += 1;
-                    beyBladeDB.put(doc);
-                    showBeybladeStats(bey1,1);
-                }
-                else{
-                    console.log(err);
-                }
-            });
-        
-            beyBladeDB.get(loser.id, function(err, doc) {
-                if(!err){
-                    doc.build.draws += 1;
-                    beyBladeDB.put(doc);
-                    showBeybladeStats(bey2,2);
-                }
-                else{
-                    console.log(err);
-                }
-            });
-        break;
-
-        default:
-            console.log("something went wrong with updating wins");
-
-    }
-    
 }
 
+//displays part win/loss records when a user chooses to see them
+function showPartStats(partType, partID){
+    
+    var partWko = 0;
+    var partLko = 0;
+    var partWso = 0;
+    var partLso = 0;
+    var partWbst = 0;
+    var partLbst = 0;
+    var partDraw = 0;
+
+    beyBladeDB.allDocs({include_docs: true, descending: true}, function(err, doc) {
+
+        for(i = 0; i < doc.total_rows; i++){
+
+            switch(partType) {
+                case "blade":
+                    if(doc.rows[i].doc.build.blade==partID){
+                        partWko += parseInt(doc.rows[i].doc.build.winsKO);
+                        partLko += parseInt(doc.rows[i].doc.build.loseKO);
+                        partWso += parseInt(doc.rows[i].doc.build.winsSO);
+                        partLso += parseInt(doc.rows[i].doc.build.loseSO);
+                        partWbst += parseInt(doc.rows[i].doc.build.winsBst);
+                        partLbst += parseInt(doc.rows[i].doc.build.loseBst);
+                        partDraw += parseInt(doc.rows[i].doc.build.draws);
+                    }
+                break;
+                case "core":
+                    if(doc.rows[i].doc.build.core==partID){
+                        partWko += parseInt(doc.rows[i].doc.build.winsKO);
+                        partLko += parseInt(doc.rows[i].doc.build.loseKO);
+                        partWso += parseInt(doc.rows[i].doc.build.winsSO);
+                        partLso += parseInt(doc.rows[i].doc.build.loseSO);
+                        partWbst += parseInt(doc.rows[i].doc.build.winsBst);
+                        partLbst += parseInt(doc.rows[i].doc.build.loseBst);
+                        partDraw += parseInt(doc.rows[i].doc.build.draws);
+                    }
+                break;
+                case "disc":
+                    if(doc.rows[i].doc.build.disc==partID){
+                        partWko += parseInt(doc.rows[i].doc.build.winsKO);
+                        partLko += parseInt(doc.rows[i].doc.build.loseKO);
+                        partWso += parseInt(doc.rows[i].doc.build.winsSO);
+                        partLso += parseInt(doc.rows[i].doc.build.loseSO);
+                        partWbst += parseInt(doc.rows[i].doc.build.winsBst);
+                        partLbst += parseInt(doc.rows[i].doc.build.loseBst);
+                        partDraw += parseInt(doc.rows[i].doc.build.draws);
+                    }
+                break;
+                case "driver":
+                    if(doc.rows[i].doc.build.driver==partID){
+                        partWko += parseInt(doc.rows[i].doc.build.winsKO);
+                        partLko += parseInt(doc.rows[i].doc.build.loseKO);
+                        partWso += parseInt(doc.rows[i].doc.build.winsSO);
+                        partLso += parseInt(doc.rows[i].doc.build.loseSO);
+                        partWbst += parseInt(doc.rows[i].doc.build.winsBst);
+                        partLbst += parseInt(doc.rows[i].doc.build.loseBst);
+                        partDraw += parseInt(doc.rows[i].doc.build.draws);
+                    }
+                break;
+                case "armor":
+                    if(doc.rows[i].doc.build.armor==partID){
+                        partWko += parseInt(doc.rows[i].doc.build.winsKO);
+                        partLko += parseInt(doc.rows[i].doc.build.loseKO);
+                        partWso += parseInt(doc.rows[i].doc.build.winsSO);
+                        partLso += parseInt(doc.rows[i].doc.build.loseSO);
+                        partWbst += parseInt(doc.rows[i].doc.build.winsBst);
+                        partLbst += parseInt(doc.rows[i].doc.build.loseBst);
+                        partDraw += parseInt(doc.rows[i].doc.build.draws);
+                    }
+                break;
+            }
+            
+            
+       }
+
+       switch(partType){
+            case "blade":
+                partIs.textContent = allBlades[partID].name;
+                partStats.textContent = "Weight: " + round(allBlades[partID].weight,2) + " grams.";
+                partKO.textContent = "KO Win/Loss: " + partWko + " / " + partLko;
+                partSO.textContent = "SO Win/Loss: " + partWso + " / " + partLso;
+                partBst.textContent = "Burst Win/Loss: " + partWbst + " / " + partLbst;
+                partDraw.textContent = "Draws: " + partDraw;
+            break;
+            case "core":
+                partIs.textContent = allCores[partID].name;
+                partStats.textContent = "Weight: " + round(allCores[partID].weight,2) + " grams.";
+                partKO.textContent = "KO Win/Loss: " + partWko + " / " + partLko;
+                partSO.textContent = "SO Win/Loss: " + partWso + " / " + partLso;
+                partBst.textContent = "Burst Win/Loss: " + partWbst + " / " + partLbst;
+                partDraw.textContent = "Draws: " + partDraw;
+            break;
+            case "disc":
+                partIs.textContent = allDiscs[partID].name;
+                partStats.textContent = "Weight: " + round(allDiscs[partID].weight,2) + " grams.";
+                partKO.textContent = "KO Win/Loss: " + partWko + " / " + partLko;
+                partSO.textContent = "SO Win/Loss: " + partWso + " / " + partLso;
+                partBst.textContent = "Burst Win/Loss: " + partWbst + " / " + partLbst;
+                partDraw.textContent = "Draws: " + partDraw;
+            break;
+            case "driver":
+                partIs.textContent = allDrivers[partID].name;
+                partStats.textContent = "Weight: " + round(allDrivers[partID].weight,2) + " grams.";
+                partKO.textContent = "KO Win/Loss: " + partWko + " / " + partLko;
+                partSO.textContent = "SO Win/Loss: " + partWso + " / " + partLso;
+                partBst.textContent = "Burst Win/Loss: " + partWbst + " / " + partLbst;
+                partDraw.textContent = "Draws: " + partDraw;
+            break;
+            case "armor":
+                partIs.textContent = allArmors[partID].name;
+                partStats.textContent = "Weight: " + round(allArmors[partID].weight,2) + " grams.";
+                partKO.textContent = "KO Win/Loss: " + partWko + " / " + partLko;
+                partSO.textContent = "SO Win/Loss: " + partWso + " / " + partLso;
+                partBst.textContent = "Burst Win/Loss: " + partWbst + " / " + partLbst;
+                partDraw.textContent = "Draws: " + partDraw;
+            break;
+       }
+
+    });
+
+}
+
+//populates the match history popup with selected Beys matchup history
+function populateMatchHist(bey){
+
+    recordsDB.allDocs({include_docs: true, descending: true}, function(err, doc) {
+
+        matchupSpace.textContent = "";
+        matchupBey.textContent = "Matchup History for " + bey.name;
+
+        //header row
+        var row = matchupSpace.insertRow(0);
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+        var cell3 = row.insertCell(2);
+        var cell4 = row.insertCell(3);
+        var cell5 = row.insertCell(4);
+        cell1.innerHTML = "Opposing Bey Name";
+        cell2.innerHTML = "KO Win/Loss";
+        cell3.innerHTML = "SO Win/Loss";
+        cell4.innerHTML = "Burst Win/Loss";
+        cell5.innerHTML = "Draws";
+
+        
+        
+        for(i = 0; i < doc.total_rows; i++){
+            if(doc.rows[i].doc.denfender!==undefined) {
+                        doc.rows.sort(function(a, b){
+                            return (''+b.doc.defender.name).localeCompare(a.doc.defender.name);
+                        });
+                    }
+            if(doc.rows[i].doc.challenger!==undefined) {
+                if(!err && bey.id==doc.rows[i].doc.challenger.id){
+                    var row = matchupSpace.insertRow(1);
+                    var cell1 = row.insertCell(0);
+                    var cell2 = row.insertCell(1);
+                    var cell3 = row.insertCell(2);
+                    var cell4 = row.insertCell(3);
+                    var cell5 = row.insertCell(4);
+                    cell1.innerHTML = doc.rows[i].doc.defender.name;
+                    cell2.innerHTML = doc.rows[i].doc.wko + "/" + doc.rows[i].doc.lko;
+                    cell3.innerHTML = doc.rows[i].doc.wso + "/" + doc.rows[i].doc.lso;
+                    cell4.innerHTML = doc.rows[i].doc.wbst + "/" + doc.rows[i].doc.lbst;
+                    cell5.innerHTML = doc.rows[i].doc.draws;
+                }
+            }
+            // else if(bey.id!=doc.rows[i].doc.challenger.id) {
+            //     console.log("No Matchup History");
+            // }
+            // else{
+            //     console.log(err);
+            // }
+
+       }
+       
+    });
+}
+
+//delete a bey from the system
+function deleteBey(){
+
+    var dbSelectList = document.getElementById("dbSelectList");
+
+    beyBladeDB.get(selectedBey.value, function(err, doc) {
+        if(!err){
+            beyBladeDB.remove(doc, function(err, doc){
+                if(!err){
+                    for (var i=0; i<dbSelectList.length; i++) {
+                        if (dbSelectList.options[i].value == selectedBey.value){
+                            dbSelectList.remove(i);
+                        }
+                    }
+                    showBeyblades();
+                }
+                // else{
+                //     console.log(err);
+                // }
+            });
+        }
+    });
+}
+
+//clears all beyblades in the database
+function deleteAllBeys() {
+
+    //clear the list so we dont just add more options
+    while (dbSelectList.options.length > 0) {                
+        dbSelectList.remove(0);
+    }        
+
+    beyBladeDB.allDocs({include_docs: true, descending: true}, function(err, doc) {
+        for(i = 0; i < doc.total_rows; i++){
+            if(!err){
+                beyBladeDB.remove(doc.rows[i].doc, function(err, doc){
+                    if(err){
+                        console.log(err);
+                    }
+                });
+            }
+            // else{
+            //     console.log(err);
+            // }
+       }
+    });
+
+}
+
+//turns out JavaScript doesn't have a random number function that just gives an int
+function getRandomInt(max) {
+
+    return Math.floor(Math.random() * max);
+
+};
+
+//JS math functions suck
+function round(num, places) {
+    var multiplier = Math.pow(10, places);
+    return Math.round(num * multiplier) / multiplier;
+}
+
+//run main on startup
 main();

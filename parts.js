@@ -1,10 +1,8 @@
-/*
- *=======================================================*
- * BeyBuiler v0.9 for Dynamite Battle and Burst Ultimate *
- * Author: Fabel                                         *
- * Copyright 2022                                        *
- *=======================================================*
- */
+/*==========================================================*
+ * BeyBuilder v1.0 for Dynamite Battle and Burst Ultimate   *
+ * Author: Fabel                                            *
+ * Copyright 2022                                           *
+ *==========================================================*/
 
 var blades = [
 
@@ -158,7 +156,10 @@ var drivers = [
     {"name":"Xplosion'", "weight":0, "abbv":"Xp'", "wins":0, "losses":0, "draws":0, "id":46},
     {"name":"Yard'", "weight":7.40, "abbv":"Yd'", "wins":0, "losses":0, "draws":0, "id":47},
     {"name":"Zeal", "weight":6.67, "abbv":"Zl", "wins":0, "losses":0, "draws":0, "id":48},
-    {"name":"Zone'+X", "weight":10.30, "abbv":"Zn'+X", "wins":0, "losses":0, "draws":0, "id":49}
+    {"name":"Zone'+X", "weight":10.30, "abbv":"Zn'+X", "wins":0, "losses":0, "draws":0, "id":49},
+
+    {"name":"Xtreme'", "weight":5.60, "abbv":"X'", "wins":0, "losses":0, "draws":0, "id":50},
+    {"name":"Quick'", "weight":5.80, "abbv":"Qc'", "wins":0, "losses":0, "draws":0, "id":51}
 
 ];
 

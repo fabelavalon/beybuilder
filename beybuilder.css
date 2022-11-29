@@ -1,3 +1,10 @@
+/*=========================================================*
+ *BeyBuilder v1.0 for Dynamite Battle and Burst Ultimate   *
+ *Author: Fabel                                            *
+ *Copyright 2022                                           *
+ *=========================================================*/
+
+/* styling for drop downs */
 .select-basic{
     color: #000;
     background-color: #67becf;
@@ -26,6 +33,7 @@
     border-color: #67becf;
 }
 
+/* styling for delete buttons */
 .btn-danger {
     color: #000;
     background-color: #67becf;
@@ -45,6 +53,7 @@
     box-shadow: 0 0 0 .2rem #8c2930;
 }
 
+/* styling for basic buttons */
 .btn-basic {
     color: #000;
     background-color: #67becf;
@@ -91,12 +100,28 @@
     box-shadow: 0 0 0 .2rem rgba(190, 190, 190, 0.5);
 }
 
+/* make sure tables and table elements have the proper borders */
 td, tr {
     border-bottom: 1px solid black;
     border-top: 1px solid black;
-    border-color: #FFF;
+    border-color: #fff;
 }
 
 table{
     border: 1px solid #fff;
+}
+
+/* make modal headers and footers sticky */
+.modal-header--sticky {
+    position: sticky;
+    top: 0;
+    background-color: inherit;
+    z-index: 1055;
+  }
+  
+.modal-footer--sticky {
+    position: sticky;
+    bottom: 0;
+    background-color: inherit; 
+    z-index: 1055; 
 }

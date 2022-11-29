@@ -1,10 +1,8 @@
-/*
- *=======================================================*
- * BeyBuiler v0.9 for Dynamite Battle and Burst Ultimate *
- * Author: Fabel                                         *
- * Copyright 2022                                        *
- *=======================================================*
- */
+/*==========================================================*
+ * BeyBuilder v1.0 for Dynamite Battle and Burst Ultimate   *
+ * Author: Fabel                                            *
+ * Copyright 2022                                           *
+ *==========================================================*/
 
 var allCores = cores;
 var allBlades = blades;
@@ -90,45 +88,6 @@ class BeyBlade {
 
     }
 
-    //turns out this is harder than you'd think
-    findSpin(){
-
-        //if the spin of the blade and core match, we gucci
-        if(allBlades[this.blade].spin==allCores[this.core].spin){
-            this.spin = allBlades[this.blade].spin;
-        }
-        //if only one of them is both spin, make it the spin of the one that isn't
-        else if(allBlades[this.blade].spin=="both" || allCores[this.core].spin=="both"){
-            if(allBlades[this.blade].spin=="both"){
-                this.spin = allCores[this.core].spin;
-            }
-            else if(allCores[this.core].spin=="both"){
-                this.spin = allBlades[this.blade].spin;
-            }
-        }
-        //otherwise the bey is invalid
-        else{
-            this.spin = "invalid";
-        }
-
-    }
-
-    findName(){
-        //Greatest Rapheal and Shot make my life hard
-        if((this.blade==15)&&(this.disc!=12)){
-            this.name = allBlades[this.blade].name + "-" + allDiscs[this.disc].abbv + "." + allDrivers[this.driver].abbv;
-        }
-        else if((this.blade==15)&&(this.disc==12)){
-            this.name = allBlades[this.blade].name + "." + allDiscs[this.disc].abbv;
-        }
-        else if(this.disc==12){
-            this.name = allBlades[this.blade].name + " " + allCores[this.core].name + "." + allDiscs[this.disc].abbv + "." + allArmors[this.armor].abbv;
-        }
-        else{
-            this.name = allBlades[this.blade].name + " " + allCores[this.core].name + "-" + allDiscs[this.disc].abbv + "." + allDrivers[this.driver].abbv + "-" + allArmors[this.armor].abbv;
-        }
-    }
-    
     //...this function checks for the parts that take up multiple build slots, like Shot or Greatest Rapheal
     partsCheck(){
         
@@ -174,6 +133,45 @@ class BeyBlade {
         //looks good to me
         else{
             return true;
+        }
+    }
+
+    //turns out this is harder than you'd think
+    findSpin(){
+
+        //if the spin of the blade and core match, we gucci
+        if(allBlades[this.blade].spin==allCores[this.core].spin){
+            this.spin = allBlades[this.blade].spin;
+        }
+        //if only one of them is both spin, make it the spin of the one that isn't
+        else if(allBlades[this.blade].spin=="both" || allCores[this.core].spin=="both"){
+            if(allBlades[this.blade].spin=="both"){
+                this.spin = allCores[this.core].spin;
+            }
+            else if(allCores[this.core].spin=="both"){
+                this.spin = allBlades[this.blade].spin;
+            }
+        }
+        //otherwise the bey is invalid
+        else{
+            this.spin = "invalid";
+        }
+
+    }
+
+    //Greatest Rapheal and Shot make my life hard
+    findName(){
+        if((this.blade==15)&&(this.disc!=12)){
+            this.name = allBlades[this.blade].name + "-" + allDiscs[this.disc].abbv + "." + allDrivers[this.driver].abbv;
+        }
+        else if((this.blade==15)&&(this.disc==12)){
+            this.name = allBlades[this.blade].name + "." + allDiscs[this.disc].abbv;
+        }
+        else if(this.disc==12){
+            this.name = allBlades[this.blade].name + " " + allCores[this.core].name + "." + allDiscs[this.disc].abbv + "." + allArmors[this.armor].abbv;
+        }
+        else{
+            this.name = allBlades[this.blade].name + " " + allCores[this.core].name + "-" + allDiscs[this.disc].abbv + "." + allDrivers[this.driver].abbv + "-" + allArmors[this.armor].abbv;
         }
     }
 
