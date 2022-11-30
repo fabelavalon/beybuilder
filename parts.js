@@ -105,8 +105,7 @@ var forgeDiscs = [
 
 var drivers = [
 
-    //if weight is 0 the driver has no weight listed on the wiki or...
-    //...the driver has not been offcially released yet.
+    //if weight is 0 the driver has not been offcially released yet.
     {"name":"Adventure", "weight":8.10, "abbv":"Ad", "wins":0, "losses":0, "draws":0, "id":0},
     {"name":"Adventure+V", "weight":13.70, "abbv":"Ad+V", "wins":0, "losses":0, "draws":0, "id":1},
     {"name":" Adventure+VS", "weight":15.70, "abbv":"Ad+VS", "wins":0, "losses":0, "draws":0, "id":2},
@@ -123,21 +122,21 @@ var drivers = [
     {"name":"Bearing Drift", "weight":10.40, "abbv":"BDr", "wins":0, "losses":0, "draws":0, "id":13},
     {"name":"Metal Drift", "weight":12.10, "abbv":"MDr", "wins":0, "losses":0, "draws":0, "id":14},
     {"name":"Metal Bearing Drift", "weight":12.30, "abbv":"MBDr", "wins":0, "losses":0, "draws":0, "id":15},
-    {"name":"High Eternal", "weight":0, "abbv":"HEt", "wins":0, "losses":0, "draws":0, "id":16},
-    {"name":"High Hold'", "weight":0, "abbv":"HH'", "wins":0, "losses":0, "draws":0, "id":17},
-    {"name":"Just'", "weight":0, "abbv":"Js'", "wins":0, "losses":0, "draws":0, "id":18},
+    {"name":"High Eternal", "weight":7.60, "abbv":"HEt", "wins":0, "losses":0, "draws":0, "id":16},
+    {"name":"High Hold'", "weight":8.40, "abbv":"HH'", "wins":0, "losses":0, "draws":0, "id":17},
+    {"name":"Just'", "weight":8.0, "abbv":"Js'", "wins":0, "losses":0, "draws":0, "id":18},
     {"name":"Kick", "weight":9.46, "abbv":"Kc", "wins":0, "losses":0, "draws":0, "id":19},
-    {"name":"High Massive", "weight":0, "abbv":"HM", "wins":0, "losses":0, "draws":0, "id":20},
+    {"name":"High Massive", "weight":7.10, "abbv":"HM", "wins":0, "losses":0, "draws":0, "id":20},
     {"name":"Bearing Mobius", "weight":0, "abbv":"BMb", "wins":0, "losses":0, "draws":0, "id":21},
     {"name":"Moment", "weight":7.20, "abbv":"Mn", "wins":0, "losses":0, "draws":0, "id":22},
-    {"name":"Moment'", "weight":0, "abbv":"Mn'", "wins":0, "losses":0, "draws":0, "id":23},
+    {"name":"Moment'", "weight":7.4, "abbv":"Mn'", "wins":0, "losses":0, "draws":0, "id":23},
     {"name":"Never", "weight":7.60, "abbv":"Nv", "wins":0, "losses":0, "draws":0, "id":24},
     {"name":"Metal Never", "weight":9.69, "abbv":"MNv", "wins":0, "losses":0, "draws":0, "id":25},
     {"name":"Planet'", "weight":0, "abbv":"Pl'", "wins":0, "losses":0, "draws":0, "id":26},
     {"name":"Quattro", "weight":10.60, "abbv":"Qt", "wins":0, "losses":0, "draws":0, "id":27},
     {"name":"Quattro'", "weight":10.82, "abbv":"Qt'", "wins":0, "losses":0, "draws":0, "id":28},
     {"name":"Revolve'", "weight":5.98, "abbv":"R'", "wins":0, "losses":0, "draws":0, "id":29},
-    {"name":"High Revolve", "weight":0, "abbv":"HR", "wins":0, "losses":0, "draws":0, "id":30},
+    {"name":"High Revolve", "weight":7.20, "abbv":"HR", "wins":0, "losses":0, "draws":0, "id":30},
     {"name":"Shot", "weight":42.42, "abbv":"", "wins":0, "losses":0, "draws":0, "id":31},
     {"name":"Metal Survive", "weight":7.80, "abbv":"MS", "wins":0, "losses":0, "draws":0, "id":32},
     {"name":"Sword'", "weight":9.36, "abbv":"Sw'", "wins":0, "losses":0, "draws":0, "id":33},
@@ -147,7 +146,7 @@ var drivers = [
     {"name":"Venture+VS", "weight":15.40, "abbv":"Vn+VS", "wins":0, "losses":0, "draws":0, "id":37},
     {"name":"Wave'", "weight":8.60, "abbv":"Wv'", "wins":0, "losses":0, "draws":0, "id":38},
     {"name":"High Wave'", "weight":9.79, "abbv":"HWv'", "wins":0, "losses":0, "draws":0, "id":39},
-    {"name":"Wedge'", "weight":0, "abbv":"Wd'", "wins":0, "losses":0, "draws":0, "id":40},
+    {"name":"Wedge'", "weight":7.30, "abbv":"Wd'", "wins":0, "losses":0, "draws":0, "id":40},
     {"name":"Xceed'+Z", "weight":9.00, "abbv":"Xc'+Z", "wins":0, "losses":0, "draws":0, "id":41},
     {"name":"High Xtend'", "weight":9.40, "abbv":"HXt'", "wins":0, "losses":0, "draws":0, "id":42},
     {"name":"High Xtend+'", "weight":9.30, "abbv":"HXt+'", "wins":0, "losses":0, "draws":0, "id":43},
