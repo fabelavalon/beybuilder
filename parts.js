@@ -6,11 +6,10 @@
 
 var blades = [
 
-    //Barricade isn't out yet, we don't know it's weight, so it's listed as 0 for now
     //Greatest Rapheal's weight is stored in it's core listing
     {"name":"Astral", "spin":"both", "weight":11.75, "abbv":"A", "wins":0, "losses":0, "draws":0, "id":0},
     {"name":"Burst", "spin":"both", "weight":15.60, "abbv":"Br", "wins":0, "losses":0, "draws":0, "id":1},
-    {"name":"Barricade", "spin":"both", "weight":0.00, "abbv":"Brc", "wins":0, "losses":0, "draws":0, "id":2},
+    {"name":"Barricade", "spin":"both", "weight":14.80, "abbv":"Brc", "wins":0, "losses":0, "draws":0, "id":2},
     {"name":"Chain", "spin":"right", "weight":14.84, "abbv":"Ch", "wins":0, "losses":0, "draws":0, "id":3},
     {"name":"Cyclone", "spin":"right", "weight":8.30, "abbv":"C", "wins":0, "losses":0, "draws":0, "id":4},
     {"name":"Dangerous", "spin":"right", "weight":10.00, "abbv":"Dn", "wins":0, "losses":0, "draws":0, "id":5},
@@ -68,7 +67,7 @@ var cores = [
     {"name":"Kerbeus", "spin":"right", "weight":8.05, "abbv":"KR", "wins":0, "losses":0, "draws":0, "id":11},
     {"name":"Knight", "spin":"right", "weight":7.62, "abbv":"KN", "wins":0, "losses":0, "draws":0, "id":12},
     {"name":"Loginus", "spin":"left", "weight":10.08, "abbv":"LN", "wins":0, "losses":0, "draws":0, "id":13},
-    {"name":"Lucifer", "spin":"left", "weight":0, "abbv":"LC", "wins":0, "losses":0, "draws":0, "id":14},
+    {"name":"Lucifer", "spin":"left", "weight":7.20, "abbv":"LC", "wins":0, "losses":0, "draws":0, "id":14},
     {"name":"Perseus", "spin":"right", "weight":10.70, "abbv":"PR", "wins":0, "losses":0, "draws":0, "id":15},
     {"name":"Pheonix", "spin":"right", "weight":7.45, "abbv":"PH", "wins":0, "losses":0, "draws":0, "id":16},
     {"name":"Ragnaruk", "spin":"right", "weight":6.70, "abbv":"RG", "wins":0, "losses":0, "draws":0, "id":17},
@@ -127,7 +126,7 @@ var drivers = [
     {"name":"Just'", "weight":8.0, "abbv":"Js'", "wins":0, "losses":0, "draws":0, "id":18},
     {"name":"Kick", "weight":9.46, "abbv":"Kc", "wins":0, "losses":0, "draws":0, "id":19},
     {"name":"High Massive", "weight":7.10, "abbv":"HM", "wins":0, "losses":0, "draws":0, "id":20},
-    {"name":"Bearing Mobius", "weight":0, "abbv":"BMb", "wins":0, "losses":0, "draws":0, "id":21},
+    {"name":"Bearing Mobius", "weight":7.80, "abbv":"BMb", "wins":0, "losses":0, "draws":0, "id":21},
     {"name":"Moment", "weight":7.20, "abbv":"Mn", "wins":0, "losses":0, "draws":0, "id":22},
     {"name":"Moment'", "weight":7.4, "abbv":"Mn'", "wins":0, "losses":0, "draws":0, "id":23},
     {"name":"Never", "weight":7.60, "abbv":"Nv", "wins":0, "losses":0, "draws":0, "id":24},
