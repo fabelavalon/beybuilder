@@ -1,7 +1,7 @@
 /*==========================================================*
- * BeyBuilder v1.0 for Dynamite Battle and Burst Ultimate   *
+ * BeyBuilder v1.1 for Dynamite Battle and Burst Ultimate   *
  * Author: Fabel                                            *
- * Copyright 2022                                           *
+ * Copyright 2022-23                                        *
  *==========================================================*/
 
 var allCores = cores;
@@ -95,20 +95,74 @@ class BeyBlade {
         var error = document.getElementById("error");
 
         //Shot Driver, it's both a Driver and a Forge Disc
-        if(((this.disc==12) && (this.driver!=31)) || ((this.disc!=12) && (this.driver==31))){
+        if(((this.disc==21) && (this.driver!=119)) || ((this.disc!=21) && (this.driver==119 ))){
             error.textContent = "Shot is both a Forge Disc and a Driver";
             return false;
         }
 
-        //Almight Driver, it's both a Driver and a Forge Disc
-        else if(((this.disc==0) && (this.driver!=3)) || ((this.disc!=0) && (this.driver==3))){
+        //All Might Driver, it's both a Driver and a Forge Disc
+        else if(((this.disc==0) && (this.driver!=8)) || ((this.disc!=0) && (this.driver==8))){
             error.textContent = "Almight is both a Forge Disc and a Driver";
             return false;
         }
 
-        //Almight+V Driver, it's both a Driver and a Forge Disc
-        else if(((this.disc==1) && (this.driver!=4)) || ((this.disc!=1) && (this.driver==4))){
+        //All Might+V Driver, it's both a Driver and a Forge Disc
+        else if(((this.disc==1) && (this.driver!=9)) || ((this.disc!=1) && (this.driver==9))){
             error.textContent = "Almight+V is both a Forge Disc and a Driver";
+            return false;
+        }
+
+        //All Might+S Driver, it's both a Driver and a Forge Disc
+        else if(((this.disc==2) && (this.driver!=10)) || ((this.disc!=2) && (this.driver==10))){
+            error.textContent = "Almight+S is both a Forge Disc and a Driver";
+            return false;
+        }
+
+        //All Might+D Driver, it's both a Driver and a Forge Disc
+        else if(((this.disc==3) && (this.driver!=11)) || ((this.disc!=3) && (this.driver==11))){
+            error.textContent = "Almight+D is both a Forge Disc and a Driver";
+            return false;
+        }
+
+        //All Might+SV Driver, it's both a Driver and a Forge Disc
+        else if(((this.disc==4) && (this.driver!=12)) || ((this.disc!=4) && (this.driver==12))){
+            error.textContent = "Almight+SV is both a Forge Disc and a Driver";
+            return false;
+        }
+
+        //All Might+DV Driver, it's both a Driver and a Forge Disc
+        else if(((this.disc==5) && (this.driver!=13)) || ((this.disc!=5) && (this.driver==13))){
+            error.textContent = "Almight+DV is both a Forge Disc and a Driver";
+            return false;
+        }
+
+        //Generate, its a driver and a disc
+        else if(((this.disc==7) && (this.driver!=57)) || ((this.disc!=7) && (this.driver==57))){
+            error.textContent = "Generate is both a Forge Disc and a Driver";
+            return false;
+        }
+
+        //Hybrid, its a driver disc
+        else if(((this.disc==9) && (this.driver!=65)) || ((this.disc!=9) && (this.driver==65))){
+            error.textContent = "Hybrid is both a Forge Disc and a Driver";
+            return false;
+        }
+
+        //Ignition, it driver disc
+        else if(((this.disc==10) && (this.driver!=66)) || ((this.disc!=10) && (this.driver==66))){
+            error.textContent = "Ignition is both a Forge Disc and a Driver";
+            return false;
+        }
+
+        //Mugen, it a drisc
+        else if(((this.disc==15) && (this.driver!=91)) || ((this.disc!=15) && (this.driver==91))){
+            error.textContent = "Mugen is both a Forge Disc and a Driver";
+            return false;
+        }
+
+        //Mugen-L, it dddddrrrr
+        else if(((this.disc==16) && (this.driver!=92)) || ((this.disc!=16) && (this.driver==92))){
+            error.textContent = "Mugen-L is both a Forge Disc and a Driver";
             return false;
         }
 
@@ -119,7 +173,7 @@ class BeyBlade {
         }
 
         //H Gear, for Divine only
-        else if((this.getArmor()==11) && !(this.blade>=9 && this.blade<=11)){
+        else if((this.armor==11) && !(this.blade>=9 && this.blade<=11)){
             error.textContent = "H Gear is for Divine variants only.";
             return false;
         }
@@ -159,20 +213,20 @@ class BeyBlade {
 
     }
 
-    //Greatest Rapheal and Shot make my life hard
+    //Driscs make my life hard
     findName(){
-        if((this.blade==15)&&(this.disc!=12)){
+        if((this.blade==15)&&!((this.disc==21)||((this.disc>=0)&&(this.disc<=5))||(this.disc==7)||(this.disc==9)||(this.disc==10)||(this.disc==15)||(this.disc==16))){
             this.name = allBlades[this.blade].name + "-" + allDiscs[this.disc].abbv + "." + allDrivers[this.driver].abbv;
         }
-        else if((this.blade==15)&&(this.disc==12)){
+        else if((this.blade==15)&&((this.disc==21)||((this.disc>=0)&&(this.disc<=5))||(this.disc==7)||(this.disc==9)||(this.disc==10)||(this.disc==15)||(this.disc==16))){
             this.name = allBlades[this.blade].name + "." + allDiscs[this.disc].abbv;
         }
-        else if(this.disc==12){
-            this.name = allBlades[this.blade].name + " " + allCores[this.core].name + "." + allDiscs[this.disc].abbv + "." + allArmors[this.armor].abbv;
+        else if((this.disc==21)||((this.disc>=0)&&(this.disc<=5))||(this.disc==7)||(this.disc==9)||(this.disc==10)||(this.disc==16)||(this.disc==16)){
+            this.name = allBlades[this.blade].name + " " + allCores[this.core].name + "." + allDiscs[this.disc].abbv + "-" + allArmors[this.armor].abbv;
         }
         else{
-            this.name = allBlades[this.blade].name + " " + allCores[this.core].name + "-" + allDiscs[this.disc].abbv + "." + allDrivers[this.driver].abbv + "-" + allArmors[this.armor].abbv;
-        }
-    }
+             this.name = allBlades[this.blade].name + " " + allCores[this.core].name + "-" + allDiscs[this.disc].abbv + "." + allDrivers[this.driver].abbv + "-" + allArmors[this.armor].abbv;
+         }
+     }
 
 }

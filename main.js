@@ -1,7 +1,7 @@
 /*==========================================================*
- * BeyBuilder v1.0 for Dynamite Battle and Burst Ultimate   *
+ * BeyBuilder v1.1 for Dynamite Battle and Burst Ultimate   *
  * Author: Fabel                                            *
- * Copyright 2022                                           *
+ * Copyright 2022-23                                        *
  *==========================================================*/
 
 //create beyblade database
